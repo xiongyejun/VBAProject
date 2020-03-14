@@ -17,7 +17,7 @@ VBA代码是随文件一起保存的，个人一直以来，使用都是在某�
 
 用上述方法在碰到类的时候，会发现根本无法定义、创建类，类的使用方法需要再做1点工作，有3中方法：
 
- 1. 用自定义数据类型封装一下
+ **1. 用自定义数据类型封装一下**
  在vbapTest里增加1个自定义的类型和一个函数：
 
         Type Test
@@ -33,12 +33,15 @@ VBA代码是随文件一起保存的，个人一直以来，使用都是在某�
         set a.c = vbapTest.NewCTest()
         
 然后就可以像使用同1个文件的类一样使用了。
- 2. 设置类属性Instancing
- 类模块有1个叫做Instancing的属性，默认是1-Private，还有1个是2-PublicNotCreatable（字面理解：公开但是不能被创建），设置为2后，在其他文件中可以声明，但不能创建：
+
+ **2. 设置类属性Instancing**
+ 
+ 类模块有1个叫做Instancing的属性，默认是1-Private，还有1个是2-PublicNotCreatable（字面理解：公开但是不能被创建），设置为2后，在其他文件中可以声明，但不能创建，使用方法：
         
         dim a as vbapTest.CTest
         set a = vbapTest.NewCTest()
- 3. 强制设置类属性Instancing为5：
+        
+ **3. 强制设置类属性Instancing为5-MultiUse：**
         
     ThisWorkbook.VBProject.VBComponents("CTest").Properties("Instancing") = 5
 
@@ -46,3 +49,8 @@ VBA代码是随文件一起保存的，个人一直以来，使用都是在某�
 
     Dim c As vbapSpace.CTest
     Set c = New vbapSpace.CTest
+    
+这是在[网上看到的][1]，至于为什么故意不公开这个属性5，是不是会出现什么问题，目前不知道。
+
+
+  [1]: http://blog.sina.com.cn/s/blog_bbfa8f220101d214.html
